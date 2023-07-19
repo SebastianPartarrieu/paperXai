@@ -1,2 +1,3 @@
-# arxivai
-Your arxiv daily digest; brought to you by your favorite LLM provider
+# arXivai
+
+Your arXiv daily digest; brought to you by your favorite LLM provider.

@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name="arxivai"
+authors=[
+    {name="Sebastian Partarrieu", email="s.a.partarrieu@gmail.com"}
+]
+description="Your arxiv daily digest, curtesy of AI"
+requires-python=">=3.8"
+version="0.1.0"
+
+[tool.setuptools.packages.find]
+where=['src']
+include=['arxivai']
