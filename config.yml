@@ -1,12 +1,20 @@
 name: Daily LLM arXiv digest
-
 sections:
-  section 1: Large Language Model inference optimization
-    questions: 
-      - question 1: What are the latest developments around large language inference and quantization?
-      - question 2: What are the latest developments around large language inference and Mixture of Experts?
-      - question 3: What are the latest developments around large language inference memory optimization?
-  section 2: Large Language Model training
-    questions: 
-      - question 1: What are the latest developments around large language models and distributed training across multiple GPUs?
-      - question 2: What are the latest developments around large language models and the tradeoff between model size and number of training tokens?
+  section 1:
+    title: Large Language Model inference optimization
+    questions:
+      - What are the latest developments around large language inference and quantization?
+      - What are the latest developments around large language inference and Mixture of Experts?
+      - What are the latest developments around large language inference memory optimization?
+  section 2:
+    title: Large Language Model training optimization
+    questions:
+      What are the latest developments around large language models and distributed training across multiple GPUs?
+      What are the latest developments around large language models and the tradeoff between model size and number of training tokens?
+arxiv-categories: # for a complete descrition of categories see https://arxiv.org/category_taxonomy
+  - cs.CL
+  - cs.AI
+  - cs.IR
+  - cs.CV
+  - cs.LG
+  - cs.NE

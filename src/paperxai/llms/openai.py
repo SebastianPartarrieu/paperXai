@@ -4,7 +4,7 @@ import tiktoken
 import numpy as np
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 
-from paperxai.llms.base import BaseLLM
+from paperxai.llms import BaseLLM
 
 
 class OpenAI(BaseLLM):
