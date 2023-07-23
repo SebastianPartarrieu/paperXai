@@ -4,7 +4,7 @@ import tiktoken
 import numpy as np
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 
-from arxivai.llms.base import BaseLLM
+from paperxai.llms.base import BaseLLM
 
 
 class OpenAI(BaseLLM):
@@ -35,8 +35,12 @@ class OpenAI(BaseLLM):
         return response["choices"][0]["message"]["content"]
 
     @retry(wait=wait_random_exponential(min=1, max=10), stop=stop_after_attempt(3))
-    def get_embeddings(self, text: List[str]) -> np.ndarray:
-        pass
+    def get_embedding(self, text: str) -> np.ndarray:
+        embedding = openai.Embedding.create(
+            model=self.embedding_model,
+            input=[text],
+        )
+        return embedding["data"][0]["embedding"]
 
     def get_function_call_response(self) -> str:
         pass
