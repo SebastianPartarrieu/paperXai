@@ -1,5 +1,6 @@
 import os
 import requests
+from datetime import datetime, timedelta, timezone
 import pandas as pd
 from bs4 import BeautifulSoup
 
@@ -97,7 +98,7 @@ class Arxiv(BasePapers):
         df_old_papers = pd.read_csv(self.path_base_papers)
         # get new papers that are not in old papers
         df_new_papers = self.df_papers[
-            ~self.df_papers["paper ID"].isin(df_old_papers["paper ID"])
+            ~self.df_papers["Paper ID"].isin(df_old_papers["Paper ID"])
         ]
         # write new papers
         df_new_papers.to_csv(
@@ -108,13 +109,13 @@ class Arxiv(BasePapers):
         df_all_papers = pd.concat([df_old_papers, self.df_papers])
         df_all_papers = df_all_papers.drop_duplicates(subset=["Paper ID"])
         # remove those more than 3 months old
+        current_date = datetime.now(timezone.utc)
+        cutoff_date = current_date - timedelta(days=3 * 30)
+
         df_all_papers["Published Date"] = pd.to_datetime(
             df_all_papers["Published Date"]
-        )
-        df_all_papers = df_all_papers[
-            df_all_papers["Published Date"]
-            > pd.to_datetime("today") - pd.DateOffset(months=3)
-        ]
+        ).dt.tz_convert(timezone.utc)
+        df_all_papers = df_all_papers[df_all_papers["Published Date"] >= cutoff_date]
         # write all papers
         df_all_papers.to_csv(self.path_base_papers, index=False)
         print("Data saved successfully.")

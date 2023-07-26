@@ -10,12 +10,12 @@ Future ambitions: aggregate across multiple news sources and create a fully auto
 - `conda env create -f environment.yml`
 - `pip install -r requirements.txt`
 - `pip install -e .`
-- go to `src/arxivai`, create a `credentials.py` file and enter fill in `OPENAI_API_KEY = "your-key-here"`
+- go to `src/paperxai`, create a `credentials.py` file and enter fill in `OPENAI_API_KEY = "your-key-here"`
 
 # How to use this
 
 # Development
-Any contributions are welcome. This
+Any contributions are welcome. Starting out as a solo project, I took the **very bad** habit of using only the master branch before using a cleaner feature branch based development process.
 
 # Thanks
 Thank you to arXiv for use of its open access interoperability.
