@@ -74,7 +74,41 @@ class Arxiv(BasePapers):
                 "Paper ID": paper_id,
             }
             papers_data.append(paper_data)
-        return pd.DataFrame(papers_data)
+        paper_data = self.format_dataframe(pd.DataFrame(papers_data))
+        return paper_data
+
+    def format_dataframe(self, papers_data: pd.DataFrame) -> pd.DataFrame:
+        """
+        Format the papers dataframe, including dates and creating a string representation
+        for later embedding.
+        """
+        papers_data["String_representation"] = papers_data.apply(
+            lambda x: self.create_string_to_embed(x), axis=1
+        )
+        papers_data["Published Date"] = pd.to_datetime(
+            papers_data["Published Date"]
+        ).dt.tz_convert(timezone.utc)
+        return papers_data
+
+    def create_string_to_embed(row: pd.Series) -> str:
+        """
+        Create a single string representation of an article to embed.
+        """
+        article_string_representation = (
+            "Title: "
+            + row["Title"]
+            + "\n"
+            + "Abstract: "
+            + row["Abstract"]
+            + "\n"
+            + "First Author: "
+            + row["Authors"].split(",")[0]
+            + "\n"
+            + "Published Date: "
+            + row["Published Date"].split("T")[0]
+            + "\n"
+        )
+        return article_string_representation
 
     def write_papers(self) -> None:
         """
@@ -111,10 +145,6 @@ class Arxiv(BasePapers):
         # remove those more than 3 months old
         current_date = datetime.now(timezone.utc)
         cutoff_date = current_date - timedelta(days=3 * 30)
-
-        df_all_papers["Published Date"] = pd.to_datetime(
-            df_all_papers["Published Date"]
-        ).dt.tz_convert(timezone.utc)
         df_all_papers = df_all_papers[df_all_papers["Published Date"] >= cutoff_date]
         # write all papers
         df_all_papers.to_csv(self.path_base_papers, index=False)

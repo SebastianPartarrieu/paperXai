@@ -22,7 +22,7 @@ class OpenAI(BaseLLM):
         self.max_tokens = max_tokens
 
     def set_tokenizer(self):
-        self.tokenizer = tiktoken.get_encoding(self.chat_model)
+        self.tokenizer = tiktoken.encoding_for_model(self.chat_model)
 
     @retry(wait=wait_random_exponential(min=1, max=10), stop=stop_after_attempt(3))
     def get_chat_response(self, prompt: str) -> str:
@@ -35,12 +35,12 @@ class OpenAI(BaseLLM):
         return response["choices"][0]["message"]["content"]
 
     @retry(wait=wait_random_exponential(min=1, max=10), stop=stop_after_attempt(3))
-    def get_embedding(self, text: str) -> np.ndarray:
+    def get_embeddings(self, text: str) -> np.ndarray:
         embedding = openai.Embedding.create(
             model=self.embedding_model,
             input=[text],
         )
-        return embedding["data"][0]["embedding"]
+        return np.array(embedding["data"][0]["embedding"])
 
     def get_function_call_response(self) -> str:
         pass

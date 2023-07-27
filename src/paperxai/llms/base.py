@@ -15,7 +15,7 @@ class BaseLLM(ABC):
         pass
 
     @abstractmethod
-    def get_embeddings(self, text: List[str]) -> np.ndarray:
+    def get_embeddings(self, text: str) -> np.ndarray:
         pass
 
     @abstractmethod
