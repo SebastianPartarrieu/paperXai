@@ -26,5 +26,5 @@ if __name__ == "__main__":
     # load config yml file
     config = load_config(args.path_config)
     arxiv = Arxiv()
-    arxiv.get_papers(config["arxiv-categories"], args.max_results)
+    arxiv.get_papers(categories=config["arxiv-categories"], max_results=args.max_results)
     arxiv.write_papers()

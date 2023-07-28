@@ -25,7 +25,7 @@ class Arxiv(BasePapers):
         )
         self.df_papers = None
 
-    def get_papers(self, categories: list[str], max_results: int = 100) -> None:
+    def get_papers(self, categories: list[str], max_results: int = 1000) -> None:
         """
         Get the latest papers from the arXiv API using the specified categories.
         """
@@ -90,7 +90,7 @@ class Arxiv(BasePapers):
         ).dt.tz_convert(timezone.utc)
         return papers_data
 
-    def create_string_to_embed(row: pd.Series) -> str:
+    def create_string_to_embed(self, row: pd.Series) -> str:
         """
         Create a single string representation of an article to embed.
         """

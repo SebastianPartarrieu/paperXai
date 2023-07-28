@@ -7,6 +7,7 @@ This is a **very early-stage project** which aims to sift through all the latest
 Future ambitions: aggregate across multiple news sources and create a fully automatic, personalized, newsletter that we can each tweak according to what we want to read. There are a few great newsletters out there and I'm not saying these will be out of business just yet; however, why can't I read something completely tailored to my interests that was intelligently put together and contains actionable information?
 
 # Installation
+
 - `conda env create -f environment.yml`
 - `pip install -r requirements.txt`
 - `pip install -e .`
@@ -14,8 +15,18 @@ Future ambitions: aggregate across multiple news sources and create a fully auto
 
 # How to use this
 
+# Testing
+
 # Development
+
 Any contributions are welcome. Starting out as a solo project, I took the **very bad** habit of using only the master branch before using a cleaner feature branch based development process.
 
+(checklist) before pushing changes or opening a PR:
+
+- `pip list --format=freeze > requirements.txt`
+- remove `paperxai` from the requirements and add `pip install -e .`
+- make sure all code is clean, documented and you've tested any core changes
+
 # Thanks
+
 Thank you to arXiv for use of its open access interoperability.
