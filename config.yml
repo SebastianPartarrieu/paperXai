@@ -9,8 +9,8 @@ sections:
   section 2:
     title: Large Language Model training optimization
     questions:
-      What are the latest developments around large language models and distributed training across multiple GPUs?
-      What are the latest developments around large language models and the tradeoff between model size and number of training tokens?
+      - What are the latest developments around large language models and distributed training across multiple GPUs?
+      - What are the latest developments around large language models and the tradeoff between model size and number of training tokens?
 arxiv-categories: # for a complete descrition of categories see https://arxiv.org/category_taxonomy
   - cs.CL
   - cs.AI
