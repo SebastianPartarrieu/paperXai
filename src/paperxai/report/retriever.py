@@ -31,10 +31,14 @@ class ReportRetriever:
         report_string = ""
         for section_title, section_info in self.report.items():
             report_string += "Section: " + section_title + "\n"
-            for i in range(len(section_info["questions"])):
-                report_string += f"Question: {section_info['questions'][i]}" + "\n"
-                report_string+= f"LLM response: {section_info['chat_responses'][i]}" + "\n"
-            report_string += "\n"
+            if isinstance(section_info["questions"], list):
+                for i in range(len(section_info["questions"])):
+                    report_string += f"Question: {section_info['questions'][i]}" + "\n"
+                    report_string+= f"LLM response: {section_info['chat_responses'][i]}" + "\n"
+                report_string += "\n"
+            else:
+                report_string += f"Question: {section_info['questions']}" + "\n"
+                report_string+= f"LLM response: {section_info['chat_responses']}" + "\n"
         print(report_string)
         self.report_string = report_string
 
