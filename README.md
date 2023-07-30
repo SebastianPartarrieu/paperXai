@@ -17,8 +17,8 @@ Once you've finished the installation procedure, a good place to start may the `
 
 # How to use this
 
-Option #1 -> use the streamlit webapp (`cd display`, `streamlit run webapp.py`)
-Option #2 -> just rerun the `example_workflow.ipynbn` notebook every so often. In it, you'll be able to load the HTML and have a readable report.
+Option #1 (Incoming) -> use the streamlit webapp (`cd display`, `streamlit run webapp.py`)
+Option #2 -> just rerun the `example_workflow.ipynbn` notebook every so often. In it, you'll be able to save the HTML then you can load it in your browser.
 Option #3 (Incoming) -> through the newsletter service which will be setup
 
 # Testing
