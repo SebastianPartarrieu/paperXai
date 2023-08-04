@@ -1,4 +1,4 @@
-from typing import List
+from typing import Union
 import openai
 import tiktoken
 import numpy as np
@@ -35,10 +35,12 @@ class OpenAI(BaseLLM):
         return response["choices"][0]["message"]["content"]
 
     @retry(wait=wait_random_exponential(min=1, max=10), stop=stop_after_attempt(3))
-    def get_embeddings(self, text: str) -> np.ndarray:
+    def get_embeddings(self, text: Union[str, list]) -> np.ndarray:
+        if isinstance(text, str):
+            text = [text]
         embedding = openai.Embedding.create(
             model=self.embedding_model,
-            input=[text],
+            input=text,
         )
         return np.array(embedding["data"][0]["embedding"])
 

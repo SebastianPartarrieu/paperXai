@@ -13,12 +13,6 @@ parser.add_argument(
     default=constants.ROOT_DIR + "/config.yml",
     help="path to config file",
 )
-parser.add_argument(
-    "--max_results",
-    type=int,
-    default=1000,
-    help="maximum number of results to return from arXiv API",
-)
 args = parser.parse_args()
 
 
@@ -26,5 +20,5 @@ if __name__ == "__main__":
     # load config yml file
     config = load_config(args.path_config)
     arxiv = Arxiv()
-    arxiv.get_papers(categories=config["arxiv-categories"], max_results=args.max_results)
+    arxiv.get_papers(categories=config["arxiv-categories"], max_results=int(config["max_results"]))
     arxiv.write_papers()

@@ -129,7 +129,11 @@ class Arxiv(BasePapers):
             self.df_papers.to_csv(self.path_current_papers, index=False)
             return
         # load old papers
-        df_old_papers = pd.read_csv(self.path_base_papers)
+        df_old_papers = pd.read_csv(self.path_base_papers,
+                                    parse_dates=["Published Date"])
+        # check whether you've updated the base papers less than one day ago
+        if not self.check_whether_should_write_papers(df_old_papers):
+            raise Exception("You've already updated the base papers less than one day ago. Not updating.")
         # get new papers that are not in old papers
         df_new_papers = self.df_papers[
             ~self.df_papers["Paper ID"].isin(df_old_papers["Paper ID"])
@@ -139,13 +143,21 @@ class Arxiv(BasePapers):
             self.path_current_papers,
             index=False,
         )
-        # combine old and new papers
+        # update old papers and remove those more than 3 months old
         df_all_papers = pd.concat([df_old_papers, self.df_papers])
         df_all_papers = df_all_papers.drop_duplicates(subset=["Paper ID"])
-        # remove those more than 3 months old
         current_date = datetime.now(timezone.utc)
         cutoff_date = current_date - timedelta(days=3 * 30)
         df_all_papers = df_all_papers[df_all_papers["Published Date"] >= cutoff_date]
         # write all papers
         df_all_papers.to_csv(self.path_base_papers, index=False)
         print("Data saved successfully.")
+
+
+    def check_whether_should_write_papers(self, df_old_papers:pd.DataFrame) -> bool:
+        """
+        Checks whether the last time the papers were written was more than one day ago.
+        """
+        last_write_date = df_old_papers["Published Date"].max()
+        current_date = datetime.now(timezone.utc)
+        return (current_date - last_write_date) > timedelta(days=1)

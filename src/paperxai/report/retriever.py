@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 import numpy as np
 from scipy import spatial
 import pandas as pd
@@ -25,6 +26,40 @@ class ReportRetriever:
         self.report = {}
         self.report_papers = pd.DataFrame()
 
+    def write_report(self, format: str = "html") -> None:
+        """
+        Write the report to a file in the chosen format
+        """
+        if format == "html":
+            self.write_html_report()
+        elif format == "md":
+            self.write_md_report()
+        else:
+            raise ValueError("Format not supported")
+        
+    def write_html_report(self) -> None:
+        """
+        Write the report to a html file using a template defined in `display/template.html`
+        """
+        if self.report == {}:
+            raise ValueError("Report is empty. Please run `create_report` first")
+        #get dates
+        current_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        oldest_date_in_report_papers = self.report_papers["Published Date"].min().strftime("%Y-%m-%d")
+        report_html_string = self.format_report()
+        with open(constants.ROOT_DIR + "/display/template.html", "r") as f:
+            template_html_string = f.read()
+        template_html_string = template_html_string.replace("{report_string}", report_html_string)
+        template_html_string = template_html_string.replace("{oldest_paper_date_string}", oldest_date_in_report_papers)
+        with open(constants.ROOT_DIR + "/display/reports/"+current_date+"-report.html", "w") as f:
+            f.write(template_html_string)
+        print(f"HTML is saved to /display/reports/{current_date}-report.html, open it in your browser to view the report")
+
+    def write_md_report(self) -> None:
+        """
+        Write the report to a markdown file
+        """
+        pass
 
     def print_report(self) -> None:
         """
@@ -62,7 +97,7 @@ class ReportRetriever:
         citation_list = []
         for _, row in df_papers.iterrows():
             citation_list.append(
-                f"<li> {row['Title']}. {row['Authors'].split(',')[0].split(' ')[-1]} et al. {row['Published Date'].split(' ')[0]}</li>"
+                f"<li> {row['Title']}. {row['Authors'].split(',')[0].split(' ')[-1]} et al. {row['Published Date'].strftime('%Y')}</li>"
             )
         return "<ul>" + "".join(citation_list) + "</ul>"
 
