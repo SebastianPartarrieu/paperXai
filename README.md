@@ -1,5 +1,7 @@
 # paperXai [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![Python](https://img.shields.io/badge/python-3.9-blue.svg) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
+![](./docs/example_report.png "An example report")
+
 Current ambition: Your arXiv daily digest - brought to you by your favorite LLM provider.
 
 This is a **very early-stage project** which aims to sift through all the latest papers in AI posted on arXiv and filter according to your interests before giving you a short summary. The main pain point we're trying to solve is the sheer mass and noise of current information around AI.
