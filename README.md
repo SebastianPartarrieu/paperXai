@@ -15,11 +15,11 @@ If you already have miniconda installed (if not go install it):
 - `pip install -e .`
 - go to `src/paperxai`, create a `credentials.py` file and enter fill in `OPENAI_API_KEY = "your-key-here"`
 
-Once you've finished the installation procedure, a good place to start may the `notebooks/example_workflow.ipynb` notebook which gives a good overview of the different parts of the package.
+Once you've finished the installation procedure, a good place to start may be the `notebooks/example_workflow.ipynb` notebook which gives a good overview of the different parts of the package.
 
 ## Usage
 
-Most important details of the report are defined in the `config.yml` file (sections, questions, llm provider ...). You should start by having a look at this file if you want to understand what is easily customizable for your report.
+The most important details of the report are defined in the `config.yml` file (sections, questions, llm provider ...).
 
 ### Option #1 -> run a script or notebook
 
