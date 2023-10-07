@@ -3,14 +3,16 @@ sections:
   section 1:
     title: Large Language Model inference optimization
     questions:
-      - What are the latest developments around large language inference and quantization?
-      - What are the latest developments around large language inference and Mixture of Experts?
-      - What are the latest developments around large language inference memory optimization?
+      - What are the latest developments around large language model inference and quantization?
+      - What are the latest developments around large language model inference memory optimization?
   section 2:
     title: Large Language Model training optimization
     questions:
-      What are the latest developments around large language models and distributed training across multiple GPUs?
-      What are the latest developments around large language models and the tradeoff between model size and number of training tokens?
+      - What are the latest developments around large language models and distributed training across multiple GPUs?
+  section 3:
+    title: Large Language Model and medicine
+    questions:
+      - What are the latest developments around large language models and medicine?
 arxiv-categories: # for a complete descrition of categories see https://arxiv.org/category_taxonomy
   - cs.CL
   - cs.AI
@@ -18,3 +20,9 @@ arxiv-categories: # for a complete descrition of categories see https://arxiv.or
   - cs.CV
   - cs.LG
   - cs.NE
+max_papers: 1000 # maximum number of papers to retrieve
+language_model:
+  provider: openai
+  init_args: # in the order of the constructor of the provider
+    chat_model: gpt-3.5-turbo
+    embedding_model: text-embedding-ada-002

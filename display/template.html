@@ -1,0 +1,96 @@
+<html>
+<head>
+<style>
+body {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+}
+header {
+    font-family: 'Courier New', Courier, monospace;
+    padding: 10px;
+    text-align: center;
+    background-color: #e9ecef;
+}
+footer {
+    font-family: 'Courier New', Courier, monospace;
+    padding: 10px;
+    text-align: center;
+    background-color: #e9ecef;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #f8f9fa;
+}
+td {
+    padding: 0;
+    background-color: #f8f9fa;
+}
+img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    background-color: #f8f9fa;
+
+}
+a {
+    color: #ee6a56;
+    text-decoration: underline;
+}
+h1 {
+    font-family: Roboto;
+    font-size: 28px;
+    line-height: 1.2;
+    color: #212529;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>PaperXAI Report</h1>
+        <p> Stay up to date with the crazy world out there.</p>
+    </header>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td align="center" bgcolor="#ffffff" style="padding: 40px 0 30px 0;">
+            <img src="https://images.unsplash.com/photo-1580584126903-c17d41830450?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1639&q=80" width="300" height="230" style="display: block; border-radius: 5%;"/>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td style="padding: 0 0 20px 0;">
+                        <h2>Introduction</h2>
+                        <p>Hi there,</p>
+                        <p>Here is your PaperXAI report. Hope you enjoy it!</p>
+                        <p>We've selected papers that have come out since your latest report. The "oldest" featured paper came out on {oldest_paper_date_string}!</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 0 20px 0;">
+                        <p>{report_string}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<footer>
+    Created by Sebastian Partarrieu. Links: 
+    <a href="https://sebastianpartarrieu.github.io/">Website</a>
+    <a href="https://www.linkedin.com/in/sebastian-partarrieu/">Linkedin</a>
+    <a href="https://github.com/SebastianPartarrieu">Github</a>
+</footer>
+</body>
+</html>
