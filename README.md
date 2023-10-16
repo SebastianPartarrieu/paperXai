@@ -34,7 +34,7 @@ The most important details of the report are defined in the `config.yml` file (s
 
 You can follow the details of the script workflow in the notebook for an overview of the details of how we create the report.
 
-### Option #2 (Incoming) -> use the streamlit webapp
+### Option #2 -> use the streamlit webapp
 
 `cd display`
 
