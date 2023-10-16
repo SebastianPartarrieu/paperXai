@@ -1,3 +1,4 @@
+from typing import Optional, Union
 from datetime import datetime, timezone
 import numpy as np
 from scipy import spatial
@@ -16,15 +17,18 @@ class ReportRetriever:
         prompter: Prompt,
         papers_embedding: np.ndarray,
         df_papers: pd.DataFrame,
-        path_to_config_file: str = constants.ROOT_DIR + "/config.yml",
+        path_to_config_file: Optional[str] = constants.ROOT_DIR + "/config.yml",
+        config: dict[str, Union[str, dict]] = None,
     ):
         self.language_model = language_model
         self.prompter = prompter
         self.papers_embedding = papers_embedding
         self.df_papers = df_papers
-        self.config = load_config(path_to_config_file)
         self.report = {}
         self.report_papers = pd.DataFrame()
+        self.config = load_config(path_to_config_file)
+        if config:
+            self.config = config
 
     def write_report(self, format: str = "html") -> None:
         """

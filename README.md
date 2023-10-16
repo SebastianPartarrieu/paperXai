@@ -29,7 +29,7 @@ The most important details of the report are defined in the `config.yml` file (s
 
 `python scripts/create_arxiv_report --path_config config.yml`
 
-`open display/reports/{Y-m-d}-report.html`: this should open the report in your browser to make it easier to read
+`open display/reports/{Y-m-d}-report.html`: this should open the report in your browser to make it easier to read (you might need to run `{browser_name} display/reports/{Y-m-d}-report.html`).
 
 You can follow the details of the script workflow in the notebook for an overview of the details of how we create the report.
 
