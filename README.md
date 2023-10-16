@@ -13,6 +13,7 @@ Future ambitions: aggregate across multiple news sources/paper repositories and 
 If you already have miniconda installed (if not go install it):
 
 - `conda env create -f environment.yml`
+- `conda activate llms`
 - `pip install -r requirements.txt`
 - `pip install -e .`
 - go to `src/paperxai`, create a `credentials.py` file and enter fill in `OPENAI_API_KEY = "your-key-here"`
