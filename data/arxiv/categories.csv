@@ -1,0 +1,38 @@
+Name;ID;Description
+Artificial Intelligence;cs.AI;Covers all areas of AI except Vision, Robotics, Machine Learning, Multiagent Systems, and Computation and Language (Natural Language Processing).
+Computational Complexity;cs.CC;Covers computational complexity theory.
+Computational Engineering, Finance, and Science;cs.CE;Covers computational aspects of engineering, finance, and science.
+Computational Geometry;cs.CG;Covers computational aspects of geometry.
+Computer Science and Game Theory;cs.GT;Covers computer science aspects of game theory.
+Computer Vision and Pattern Recognition;cs.CV;Covers image processing, computer vision, pattern recognition, and scene understanding.
+Computers and Society;cs.CY;Covers impact of computers on society, computer ethics, information technology and public policy, legal aspects of computing, computers and education.
+Cryptography and Security;cs.CR;Covers cryptography and security.
+Data Structures and Algorithms;cs.DS;Covers data structures and algorithms.
+Databases;cs.DB;Covers database management, datamining, and data processing.
+Digital Libraries;cs.DL;Covers digital libraries.
+Discrete Mathematics;cs.DM;Covers discrete mathematics.
+Distributed, Parallel, and Cluster Computing;cs.DC;Covers distributed, parallel, and cluster computing.
+Emerging Technologies;cs.ET;Covers emerging technologies.
+Formal Languages and Automata Theory;cs.FL;Covers formal languages and automata theory.
+General Literature;cs.GL;Covers introductory material, survey material, predictions of future trends, biographies, and miscellaneous computer-science related material.
+Graphics;cs.GR;Covers all aspects of computer graphics.
+Hardware Architecture;cs.AR;Covers systems organization and hardware architecture.
+Human-Computer Interaction;cs.HC;Covers human factors, user interfaces, and collaborative computing.
+Information Retrieval;cs.IR;Covers indexing, dictionaries, retrieval, content and analysis.
+Information Theory;cs.IT;Covers information theory.
+Learning;cs.LG;Covers machine learning.
+Logic in Computer Science;cs.LO;Covers logic in computer science.
+Mathematical Software;cs.MS;Covers mathematical software.
+Multimedia;cs.MM;Covers multimedia.
+Networking and Internet Architecture;cs.NI;Covers networking and internet architecture.
+Neural and Evolutionary Computing;cs.NE;Covers neural and evolutionary computing.
+Numerical Analysis;cs.NA;Covers numerical analysis.
+Operating Systems;cs.OS;Covers operating systems.
+Other Computer Science;cs.OH;Covers computer science topics not covered elsewhere.
+Performance;cs.PF;Covers performance measurement and evaluation, queueing, and simulation.
+Programming Languages;cs.PL;Covers programming languages.
+Robotics;cs.RO;Covers robotics.
+Social and Information Networks;cs.SI;Covers social and information networks.
+Software Engineering;cs.SE;Covers software engineering.
+Sound;cs.SD;Covers sound and music computing.
+Symbolic Computation;cs.SC;Covers symbolic computation.

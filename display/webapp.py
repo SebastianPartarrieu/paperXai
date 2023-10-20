@@ -28,6 +28,7 @@ if "report" not in st.session_state:
 if "report_string" not in st.session_state:
     st.session_state.report_string = ""
 
+
 def check_session_state_key_empty(session_state: dict, state_key: str) -> bool: # will put in utils file
     if state_key not in session_state:
         return True
@@ -39,7 +40,7 @@ def click_button() -> None: # will put in utils file
     # check that model has been selected + API key entered + webpage url entered
     if (
         (check_session_state_key_empty(st.session_state, "model"))
-        or (check_session_state_key_empty(st.session_state, "api_key"))
+        or (check_session_state_key_empty(st.session_state, "OPENAI_API_KEY"))
         ):
         st.session_state.create_report_button_clicked = False
     else:
@@ -72,6 +73,9 @@ def format_html_to_markdown(html_string: str) -> str:
     html_string = html_string.replace("<li>", "-").replace("</li>", "\n")
     return html_string
     
+if "OPENAI_API_KEY" in st.session_state:
+    openai.api_key = st.session_state.OPENAI_API_KEY
+
 
 ########## sidebar ##########
 
@@ -110,10 +114,13 @@ with st.sidebar:
     
     )
 
+    labels_arxiv_categories = pd.read_csv(constants.ROOT_DIR+"/data/arxiv/categories.csv", sep=";")
+    labels_arxiv_categories.index = labels_arxiv_categories["ID"]
     st.sidebar.multiselect(
-        "Select the arXiv [categories](https://arxiv.org/category_taxonomy) used to search papers:",
-        options=["cs.CL", "cs.AI", "cs.IR", "cs.CV", "cs.LG", "cs.NE"],
+        "Select the arXiv CS [categories](https://arxiv.org/category_taxonomy) used to search papers:",
+        options=labels_arxiv_categories["ID"],
         default=["cs.AI"],
+        format_func=lambda x: labels_arxiv_categories.loc[x]["Name"],
         key="arxiv_categories",
     )
 
@@ -162,51 +169,58 @@ with tab1:
 
     create_report = st.button("Create report", on_click=click_button)
     if create_report:
-        if st.session_state.report["llm_answers"] == []:
-            # define language model
-            openai_model = OpenAI(
-            chat_model=st.session_state.model,
-            embedding_model="text-embedding-ada-002",
-            temperature=0.0,
-            max_tokens=1000,
-        )
-            # get arxiv papers
-            arxiv = Arxiv()
-            arxiv.get_papers(categories=st.session_state.arxiv_categories,
-                            max_results=int(st.session_state.max_papers))
-            arxiv.write_papers()
-            # load papers and compute embeddings
-            df_papers = pd.read_csv(constants.ROOT_DIR + "/data/arxiv/current_papers.csv",
-                                    parse_dates=["Published Date"])
-            df_papers["Embeddings"] = df_papers["String_representation"].apply(
-            lambda x: openai_model.get_embeddings(text=x)
-        )
-            papers_embeddings = df_papers["Embeddings"].values
-            papers_embeddings = np.vstack(papers_embeddings)
-            # save embeddings
-            np.save(constants.ROOT_DIR + "/data/arxiv/papers_embeddings.npy", papers_embeddings)
-            # create report
-            prompter = Prompt()
-            # create config
-            report_config = {"title": "Streamlit arXiv digest",
-                            "sections": {"section 1": {"title": "arXiv based responses",
-                                                        "questions": st.session_state.report['topics']}}}
-            report_retriever = ReportRetriever(
-                language_model=openai_model,
-                prompter=prompter,
-                papers_embedding=papers_embeddings,
-                df_papers=df_papers,
+        if st.session_state.report["llm_answers"] == [] and st.session_state.report["topics"] != []:
+            with st.spinner("Creating your report..."):
+                # define language model
+                openai_model = OpenAI(
+                chat_model=st.session_state.model,
+                embedding_model="text-embedding-ada-002",
+                temperature=0.0,
+                max_tokens=1000,
             )
+                # get arxiv papers
+                arxiv = Arxiv()
+                arxiv.get_papers(categories=st.session_state.arxiv_categories,
+                                max_results=int(st.session_state.max_papers))
+                arxiv.write_papers()
+                # load papers and compute embeddings
+                df_papers = pd.read_csv(constants.ROOT_DIR + "/data/arxiv/current_papers.csv",
+                                        parse_dates=["Published Date"])
+                df_papers["Embeddings"] = df_papers["String_representation"].apply(
+                lambda x: openai_model.get_embeddings(text=x)
+            )
+                papers_embeddings = df_papers["Embeddings"].values
+                papers_embeddings = np.vstack(papers_embeddings)
+                # save embeddings
+                np.save(constants.ROOT_DIR + "/data/arxiv/papers_embeddings.npy", papers_embeddings)
+                # create report
+                prompter = Prompt()
+                # create config
+                report_config = {"title": "Streamlit arXiv digest",
+                                "sections": {"section 1": {"title": "arXiv based responses",
+                                                            "questions": st.session_state.report['topics']}}}
+                report_retriever = ReportRetriever(
+                    language_model=openai_model,
+                    prompter=prompter,
+                    papers_embedding=papers_embeddings,
+                    df_papers=df_papers,
+                    config=report_config,
+                )
 
-            report = report_retriever.create_report()
-            st.session_state.report["llm_answers"] = report["arXiv based responses"]["chat_responses"]
-            st.session_state.report["papers"] = report["arXiv based responses"]["papers"]
-            report_string = report_retriever.format_report()
-            st.session_state.report_string = report_string
+                report = report_retriever.create_report()
+                st.session_state.report["llm_answers"] = report["arXiv based responses"]["chat_responses"]
+                st.session_state.report["papers"] = report["arXiv based responses"]["papers"]
+                report_string = report_retriever.format_report()
+                st.session_state.report_string = report_string
+                st.text("Report created, look at the view tab!")
 
 with tab2:
-    with open("./display/example_report_string.html", "r") as f:
-        report_string = f.read()
-    st.markdown(
-        format_html_to_markdown(report_string)
-    )
+    if "report_string" in st.session_state:
+        if not (st.session_state.report_string in [None, ""]):
+            st.markdown(
+                format_html_to_markdown(report_string)
+            )
+    else:
+        st.markdown(
+            "**Please run the report creation!**"
+        )

@@ -1,5 +1,7 @@
 # specific
-/data/*
+/data/arxiv/*
+/data/pubmed/*
+!categories.csv
 credentials.py
 
 # Byte-compiled / optimized / DLL files
