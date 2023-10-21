@@ -35,7 +35,6 @@ class Arxiv(BasePapers):
         )[:-4]
         self.query_params["search_query"] = category_query
         self.query_params["max_results"] = max_results
-
         # get API response
         response = requests.get(self.base_url, params=self.query_params)
         # parse and store response

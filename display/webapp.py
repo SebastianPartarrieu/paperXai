@@ -1,3 +1,4 @@
+import datetime
 import streamlit as st
 import openai
 import pandas as pd
@@ -17,7 +18,7 @@ st.set_page_config(
     layout="wide",
 )
 st.header("paperXai🧙")
-st.subheader("A web app to explore the most recent papers.")
+st.subheader("A web app to explore recent papers")
 
 if "create_report_button_clicked" not in st.session_state:
     st.session_state.create_report_button_clicked = False
@@ -122,6 +123,23 @@ with st.sidebar:
         default=["cs.AI"],
         format_func=lambda x: labels_arxiv_categories.loc[x]["Name"],
         key="arxiv_categories",
+    )
+
+    st.date_input(
+        "Start date for articles to include",
+        value=datetime.datetime.now() - datetime.timedelta(days=10),
+        min_value=datetime.datetime.now() - datetime.timedelta(weeks=104),
+        max_value=datetime.datetime.now() - datetime.timedelta(days=1),
+        key="start_date",
+        help="You should only include the last few days if you want the web app to run in reasonable time."
+     )
+    
+    st.date_input(
+        "End date for articles to include",
+        value=datetime.datetime.now(),
+        min_value=datetime.datetime.now() - datetime.timedelta(weeks=103),
+        max_value=datetime.datetime.now(),
+        key="end_date"
     )
 
 
