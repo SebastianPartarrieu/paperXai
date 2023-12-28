@@ -25,7 +25,7 @@ class Arxiv(BasePapers):
         )
         self.df_papers = None
 
-    def get_papers(self, categories: list[str], max_results: int = 1000) -> None:
+    def get_papers(self, categories: list[str], max_results: int = 1000, start_date = datetime.now() - timedelta(weeks=10), end_date = datetime.now()) -> None:
         """
         Get the latest papers from the arXiv API using the specified categories.
         """
@@ -40,7 +40,7 @@ class Arxiv(BasePapers):
         # parse and store response
         self.df_papers = self.parse_paper_information_from_response(response)
 
-    def parse_paper_information_from_response(self, response: str) -> pd.DataFrame:
+    def parse_paper_information_from_response(self, response: str, start_date = datetime.now() - timedelta(weeks=10), end_date = datetime.now()) -> pd.DataFrame:
         """
         Parse the response from the arXiv API.
         The folliwing links may be useful to understand the various fields:
@@ -72,7 +72,9 @@ class Arxiv(BasePapers):
                 "Category": category,
                 "Paper ID": paper_id,
             }
-            papers_data.append(paper_data)
+            # add paper if published date is within the specified range
+            if start_date <= datetime.strptime(published_date, "%Y-%m-%dT%H:%M:%SZ") <= end_date:
+                papers_data.append(paper_data)
         paper_data = self.format_dataframe(pd.DataFrame(papers_data))
         return paper_data
 
@@ -113,8 +115,8 @@ class Arxiv(BasePapers):
         """
         Write the papers into a pandas DataFrame.
         Two files are written and stored:
-        - base_papers.csv: contains the base dataframe of all previous papers. This dataframe
-        is filtered to not contain papers older than 3 months old and is continuously updated.
+        - base_papers.csv: contains the base dataframe of all previously fetched papers. This dataframe
+        is continuously updated.
         - current_papers.csv: contains the current dataframe of papers. These papers
         consist of the papers that were obtained from the last API call and were not previously
         stored in the base_papers.csv file.
@@ -143,12 +145,9 @@ class Arxiv(BasePapers):
                 self.path_current_papers,
                 index=False,
             )
-            # update old papers and remove those more than 3 months old
+            # update old papers
             df_all_papers = pd.concat([df_old_papers, self.df_papers])
             df_all_papers = df_all_papers.drop_duplicates(subset=["Paper ID"])
-            current_date = datetime.now(timezone.utc)
-            cutoff_date = current_date - timedelta(days=3 * 30)
-            df_all_papers = df_all_papers[df_all_papers["Published Date"] >= cutoff_date]
             # write all papers
             df_all_papers.to_csv(self.path_base_papers, index=False)
             print("Data saved successfully.")

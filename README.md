@@ -40,11 +40,6 @@ You can follow the details of the script workflow in the notebook for an overvie
 
 `streamlit run webapp.py`
 
-### Option #3 (Incoming) -> through the newsletter service
-
-- Fill in questionnaire to define sections and questions
-- Receive updates at the frequency of your choice with the report in the email
-
 ## Testing
 
 ## Development
@@ -62,7 +57,7 @@ Any contributions are welcome. Starting out as a solo project, I took the **very
 
 - [x] Write script to run report creation from CLI
 - [ ] More formats for the report (e.g markdown, pdf)
-- [ ] Quick streamlit webapp where you enter api key, launch report creation and it loads the report directly
+- [x] Quick streamlit webapp where you enter api key, launch report creation and it loads the report directly
 - [ ] Work further on report style
 - [ ] Handle pubmed API and adapt report creation code
 - [ ] Support email integration to receive it automatically
@@ -70,7 +65,7 @@ Any contributions are welcome. Starting out as a solo project, I took the **very
 
 ## Disclaimer
 
-This does not substitute discovering papers/information through the multitude of other ways. It's useful if you have a few predefined topics and want to sift through the volume of incoming information. It's also a toy project.
+This does not substitute discovering papers/information through the multitude of other ways. It's useful if you have a few predefined topics and want to sift through the large volume of incoming information. It's a toy project.
 
 ## Thanks
 

@@ -199,7 +199,9 @@ with tab1:
                 # get arxiv papers
                 arxiv = Arxiv()
                 arxiv.get_papers(categories=st.session_state.arxiv_categories,
-                                max_results=int(st.session_state.max_papers))
+                                max_results=int(st.session_state.max_papers),
+                                start_date=st.session_state.start_date,
+                                end_date=st.session_state.end_date)
                 arxiv.write_papers()
                 # load papers and compute embeddings
                 df_papers = pd.read_csv(constants.ROOT_DIR + "/data/arxiv/current_papers.csv",
